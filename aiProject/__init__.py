@@ -1,5 +1,3 @@
-from algorithms.uniformCostSearch import uniform_cost_search
-if __name__ == "__main__":
-    path, distance = uniform_cost_search("Aveiro", "Lisboa")
-    print("Caminho:", path)
-    print("Distância total:", distance, "km")
+# /aiProject/__init__.py
+from ocr import *
+from algorithms import *

@@ -21,5 +21,6 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('ocr/', include('ocr.urls')),
+    path('ucs/', include('algorithms.urls')),
 ]
 
