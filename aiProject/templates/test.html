@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Busca UCS</title>
+</head>
+<body>
+    <h1>Busca de Rota com UCS</h1>
+
+    <form method="get">
+        <label>Início:</label>
+        <input type="text" name="inicio" required><br>
+
+        <label>Destino:</label>
+        <input type="text" name="destino" required><br>
+
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if resultado %}
+        <h2>Resultado da Busca:</h2>
+        <pre>{{ resultado }}</pre>  <!-- mostra o retorno formatado -->
+    {% endif %}
+</body>
+</html>

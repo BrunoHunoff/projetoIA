@@ -1,3 +1,3 @@
 # /aiProject/__init__.py
-from ocr import *
-from algorithms import *
+from aiProject.ocr import *
+from aiProject.algorithms import *
