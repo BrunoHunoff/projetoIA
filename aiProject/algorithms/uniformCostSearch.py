@@ -7,6 +7,12 @@ def uniform_cost_search(start, goal):
     
     print("ENTREI")
     
+    if start not in CITIES_DISTANCE:
+        return "Cidade não encontrada" + start, None
+    
+    if goal not in CITIES_DISTANCE:
+        return "Cidade não encontrada" + start, None
+    
     
     # Fila de prioridade: (custo_acumulado, cidade_atual, caminho)
     frontier = [(0, start, [start])]

@@ -1,19 +1,24 @@
+# views.py (em qualquer app)
 from django.shortcuts import render
-from aiProject.algorithms.uniformCostSearch import uniform_cost_search
+from ..ocr.ocr import upload_image
+from ..algorithms.uniformCostSearch import uniform_cost_search
 
 def pagina_teste(request):
-    rota_resultado = 'aaaaaa'
-    
-    print(rota_resultado)
+    contexto = {
+        'placa': None,
+        'rota': None
+    }
 
-    # Verifica se há parâmetros GET (você pode usar POST também se quiser)
-    if request.method == "GET" and "inicio" in request.GET and "destino" in request.GET:
-        start = request.GET.get("inicio")
-        end = request.GET.get("destino")
-        rota_resultado = uniform_cost_search(start, end)
+    if request.method == 'POST':
+        # Processa OCR se veio imagem
+        if 'imagem' in request.FILES:
+            contexto['placa'] = upload_image(request)
         
-    print(rota_resultado)
-
-    return render(request, 'test.html', {
-        'resultado': rota_resultado
-    })
+        # Processa UCS se veio cidades
+        if 'start' in request.POST and 'goal' in request.POST:
+            start = request.POST['start']
+            goal = request.POST['goal']
+            path, cost = uniform_cost_search(start, goal)
+            contexto['rota'] = {'path': path, 'cost': cost}
+    
+    return render(request, 'test.html', contexto)
