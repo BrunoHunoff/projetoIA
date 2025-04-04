@@ -14,9 +14,8 @@ def uniform_cost_search(start, goal):
         return "Cidade não encontrada" + start, None
     
     
-    # Fila de prioridade: (custo_acumulado, cidade_atual, caminho)
     frontier = [(0, start, [start])]
-    #heapq.heappush(frontier, (0, start, [start]))
+
     visited = []
 
     while frontier:
@@ -25,7 +24,7 @@ def uniform_cost_search(start, goal):
         current_cost, current_city, path = frontier.pop(0)
 
         if current_city == goal:
-            return path, current_cost  # Caminho encontrado!
+            return path, current_cost  # Caminho encontrado
 
         if current_city in visited:
             continue
