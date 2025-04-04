@@ -39,7 +39,7 @@ def upload_image(request):
     if request.method == 'POST':
 
         if 'imagem' not in request.FILES:
-            return JsonResponse({'error': 'Nenhuma imagem enviada'}, status=400)
+            return 'imagem não encontrada'
 
         imagem = request.FILES['imagem']
 
@@ -52,10 +52,15 @@ def upload_image(request):
                 destination.write(chunk)
 
         placa = extrairTexto(image_path)
+        
+        print(placa)
+        print(placa)
+        print(placa)
+        print(placa)
 
         os.remove(image_path)
 
-        return JsonResponse({'placa_detectada': placa})
+        return placa
 
     return JsonResponse({'error': 'Método não permitido'}, status=405)
 
