@@ -34,7 +34,6 @@ def extrairTexto(image_path):
         return []
     
 
-@csrf_exempt #desativa proteção pois ambiente é dev
 def upload_image(request):
     if request.method == 'POST':
 
@@ -52,11 +51,6 @@ def upload_image(request):
                 destination.write(chunk)
 
         placa = extrairTexto(image_path)
-        
-        print(placa)
-        print(placa)
-        print(placa)
-        print(placa)
 
         os.remove(image_path)
 
