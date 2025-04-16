@@ -1,11 +1,6 @@
 from .citiesData import CITIES_DISTANCE
 
 def uniform_cost_search(start, goal):
-    """
-    Retorna o caminho mais curto e a distância total entre 'start' e 'goal'.
-    """
-    
-    print("ENTREI")
     
     if start not in CITIES_DISTANCE:
         return "Cidade não encontrada" + start, None
@@ -24,7 +19,7 @@ def uniform_cost_search(start, goal):
         current_cost, current_city, path = frontier.pop(0)
 
         if current_city == goal:
-            return path, current_cost  # Caminho encontrado
+            return path, current_cost
 
         if current_city in visited:
             continue
