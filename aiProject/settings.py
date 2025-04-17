@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "aiProject.ocr",
-    "aiProject.algorithms",
     "aiProject.templates",
 ]
 

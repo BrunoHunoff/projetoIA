@@ -1,24 +1,24 @@
 import heapq
 
-def buscar(grafo, inicio, objetivo, heuristica=None):
-    fila = [(0, [inicio])]
-    visitados = set()
+def buscar(grafo, start, goal, heuristica=None):
+    frontier = [(0, [start])]
+    visited = set()
     iteracoes = []
 
-    while fila:
-        custo, caminho = heapq.heappop(fila)
-        atual = caminho[-1]
-        iteracoes.append((caminho, custo))
+    while frontier:
+        currentCost, path = heapq.heappop(frontier)
+        currentCity = path[-1]
+        iteracoes.append((path, currentCost))
 
-        if atual == objetivo:
-            return caminho, iteracoes, custo
+        if currentCity == goal:
+            return path, iteracoes, currentCost
 
-        if atual in visitados:
+        if currentCity in visited:
             continue
-        visitados.add(atual)
+        visited.add(currentCity)
 
-        for vizinho, peso in grafo.get(atual, {}).items():
-            if vizinho not in visitados:
-                heapq.heappush(fila, (custo + peso, caminho + [vizinho]))
+        for neighbor, cost in grafo.get(currentCity, {}).items():
+            if neighbor not in visited:
+                heapq.heappush(frontier, (currentCost + cost, path + [neighbor]))
 
     return None, iteracoes, float('inf')
