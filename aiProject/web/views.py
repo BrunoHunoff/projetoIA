@@ -3,7 +3,7 @@ from aiProject.cidades.graph import GRAFO
 from aiProject.cidades.algorithms.aprofundamento_progressivo import buscar as aprofundamento_progressivo
 from aiProject.cidades.algorithms.a_estrela import buscar as a_estrela
 from aiProject.cidades.algorithms.procura_sofrega import buscar as procura_sofrega
-from aiProject.algorithms.uniformCostSearch import uniform_cost_search
+from aiProject.cidades.algorithms.custo_uniforme import buscar as uniform_cost_search
 from aiProject.ocr.ocr import upload_image
 from aiProject.cidades.views import gerar_mapa
 from aiProject.cidades.heuristicas import HEURISTICAS_MATRIZ 
@@ -34,7 +34,7 @@ def interface(request):
 
             if origem and destino:
                 if algoritmo == "custo_uniforme":
-                    caminho, custo = uniform_cost_search(origem, destino)
+                    caminho, _,custo = uniform_cost_search(GRAFO, origem, destino)
                     resultado = {"caminho": caminho, "custo": custo}
 
                 elif algoritmo == "aprofundamento_progressivo":
