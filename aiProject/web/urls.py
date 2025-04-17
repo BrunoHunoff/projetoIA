@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import pagina_teste
+from .views import interface
+
+
 
 urlpatterns = [
-    path('teste/', pagina_teste, name='pagina_teste'),
+    path('', interface, name='interface'),
 ]
+
