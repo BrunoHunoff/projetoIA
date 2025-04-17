@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Projeto IA - Interface Final</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 45%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mapa-container {
+            width: 50%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 90vh;
+            overflow: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        select, button, input[type="file"], input[type="text"] {
+            padding: 6px 10px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .resultados {
+            background-color: #e6f7ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #1890ff;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="form-container">
+        <h1> Interface Inteligente de Busca com OCR e Algoritmos</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label> Enviar Imagem da Matrícula:</label>
+                <input type="file" name="imagem" required />
+                <button type="submit" name="action" value="ocr">Ler Matrícula</button>
+            </div>
+        </form>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="placa"> Matrícula:</label>
+                <input type="text" name="placa" id="placa" value="{{ placa }}" {% if not placa %}placeholder="Será preenchido automaticamente..."{% endif %}>
+            </div>
+
+            <div class="form-group">
+                <label for="origem"> Origem:</label>
+                <select name="origem" required>
+                    {% for cidade in cidades %}
+                        <option value="{{ cidade }}">{{ cidade }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destino"> Destino:</label>
+                <select name="destino" required>
+                    {% for cidade in cidades %}
+                        <option value="{{ cidade }}">{{ cidade }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="algoritmo"> Algoritmo de Busca:</label>
+                <select name="algoritmo" required>
+                    <option value="custo_uniforme">Custo Uniforme</option>
+                    <option value="aprofundamento_progressivo">Aprofundamento Progressivo</option>
+                    <option value="procura_sofrega">Procura Sôfrega</option>
+                    <option value="a_estrela">A*</option>
+                </select>
+            </div>
+
+            <button type="submit" name="action" value="buscar">Buscar Caminho</button>
+        </form>
+
+        {% if placa %}
+            <div class="resultados">
+                <p><strong> Matrícula lida:</strong> {{ placa }}</p>
+            </div>
+        {% endif %}
+
+        {% if resultado %}
+            <div class="resultados">
+                <h3> Resultado da Busca</h3>
+                <p><strong>Caminho:</strong> {{ resultado.caminho|join:" → " }}</p>
+                <p><strong>Custo:</strong> {{ resultado.custo }} km</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="mapa-container">
+        {% if mapa_html %}
+            {{ mapa_html|safe }}
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
