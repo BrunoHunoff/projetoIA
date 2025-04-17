@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Busca de Caminhos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .resultados {
+            background-color: #e6f7ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #1890ff;
+        }
+        .mapa {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, button {
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Busca entre Cidades</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="origem">Origem:</label>
+                <select name="origem" id="origem" required>
+                    {% for cidade in cidades %}
+                        <option value="{{ cidade }}">{{ cidade }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destino">Destino:</label>
+                <select name="destino" id="destino" required>
+                    {% for cidade in cidades %}
+                        <option value="{{ cidade }}">{{ cidade }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="algoritmo">Algoritmo:</label>
+                <select name="algoritmo" id="algoritmo" required>
+                    <option value="custo_uniforme">Custo Uniforme</option>
+                    <option value="aprofundamento_progressivo">Aprofundamento Progressivo</option>
+                    <option value="procura_sofrega">Procura Sôfrega</option>
+                    <option value="a_estrela">A*</option>
+                </select>
+            </div>
+
+            <button type="submit">Buscar Caminho</button>
+        </form>
+
+        {% if resultado %}
+            <div class="resultados">
+                <h3>Resultado da Busca</h3>
+                <p><strong>Caminho:</strong> {{ resultado.caminho|join:" → " }}</p>
+                <p><strong>Custo Total:</strong> {{ resultado.custo }}</p>
+            </div>
+        {% endif %}
+
+        <div class="mapa">
+            {% if mapa_html %}
+                {{ mapa_html|safe }}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

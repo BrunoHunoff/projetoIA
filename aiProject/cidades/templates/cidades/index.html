@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Portugal - Busca</title>
+</head>
+<body>
+    <h1>Busca entre cidades</h1>
+    <form method="post">{% csrf_token %}
+        Origem:
+        <select name="origem">
+            {% for cidade in cidades %}
+                <option value="{{ cidade }}">{{ cidade }}</option>
+            {% endfor %}
+        </select>
+        Destino:
+        <select name="destino">
+            {% for cidade in cidades %}
+                <option value="{{ cidade }}">{{ cidade }}</option>
+            {% endfor %}
+        </select>
+        Método:
+        <select name="metodo">
+            <option value="custo_uniforme">Custo Uniforme</option>
+            <option value="aprofundamento_progressivo">Aprofundamento Progressivo</option>
+            <option value="procura_sofrega">Procura Sôfrega</option>
+            <option value="a_estrela">A*</option>
+        </select>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if resultado %}
+        <h2>Resultado</h2>
+        <p><strong>Caminho:</strong> {{ resultado.caminho }}</p>
+        <p><strong>Distância:</strong> {{ resultado.custo }} km</p>
+        <h3>Iterações:</h3>
+        <ul>
+        {% for i in resultado.iteracoes %}
+            <li>{{ i }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
