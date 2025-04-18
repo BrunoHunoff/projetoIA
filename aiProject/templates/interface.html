@@ -159,7 +159,7 @@
         </div>
         {% endif %} {% if resultado %}
         <div class="resultados">
-          <h3>Resultado da Busca</h3>
+          <h3>Resultado da Busca ({{ resultado.algoritmo}})</h3>
           <p><strong>Caminho:</strong> {{ resultado.caminho|join:" → " }}</p>
           <p><strong>Custo:</strong> {{ resultado.custo }} km</p>
         </div>
@@ -172,8 +172,18 @@
           <h3>Caminhos explorados</h3>
           <strong>Iterações:</strong>
           <ul>
-            {% for caminho, custo in resultado.iteracoes %}
-            <li>{{ caminho }} – custo: {{ custo }}</li>
+            {% for item in resultado.iteracoes %}
+              {% if resultado.algoritmo == "Aprofundamento Progressivo" %} 
+                {% with caminho=item.0 custo=item.1 profundidade=item.2 %}
+                  <li>
+                    Nível: {{ profundidade }} – caminho: {{ caminho }} – custo: {{ custo }}
+                  </li>
+                {% endwith %} 
+              {% else %} 
+                {% with caminho=item.0 custo=item.1 %}
+                  <li>{{ caminho }} – custo: {{ custo }}</li>
+                {% endwith %} 
+              {% endif %} 
             {% endfor %}
           </ul>
         </div>

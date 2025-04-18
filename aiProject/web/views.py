@@ -11,6 +11,7 @@ from aiProject.cidades.heuristicas import HEURISTICAS_MATRIZ
 def interface(request):
     resultado = None
     placa = None
+    iteracoes = None
     mapa_html = None
     cidades = list(GRAFO.keys())
 
@@ -35,19 +36,19 @@ def interface(request):
             if origem and destino:
                 if algoritmo == "custo_uniforme":
                     caminho, iteracoes,custo = uniform_cost_search(GRAFO, origem, destino)
-                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes, "algoritmo": "Custo Uniforme"}
 
                 elif algoritmo == "aprofundamento_progressivo":
                     caminho, iteracoes, custo = aprofundamento_progressivo(GRAFO, origem, destino)
-                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
+                    resultado = {"caminho": caminho, "custo": custo,"iteracoes": iteracoes, "algoritmo": "Aprofundamento Progressivo"}
 
                 elif algoritmo == "procura_sofrega":
                     caminho, iteracoes, custo = procura_sofrega(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
-                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes, "algoritmo": "Procura Sôfrega"}
 
                 elif algoritmo == "a_estrela":
                     caminho, iteracoes, custo = a_estrela(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
-                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes, "algoritmo": "A*"}
 
                 if resultado and resultado.get("caminho"):
                     mapa_html = gerar_mapa(origem, destino, resultado["caminho"], GRAFO)

@@ -16,9 +16,12 @@ def buscar(grafo, inicio, objetivo, heuristica=None):
 
     for profundidade in range(100):
         caminho = dfs([inicio], profundidade)
-        iteracoes.append((profundidade, caminho))
+        
         if caminho:
             custo = sum(grafo[caminho[i]][caminho[i+1]] for i in range(len(caminho)-1))
+            iteracoes.append((caminho, custo, profundidade))
             return caminho, iteracoes, custo
+        
+        iteracoes.append((None, None, profundidade))
 
     return None, iteracoes, float('inf')
