@@ -3,13 +3,15 @@ import heapq
 def buscar(grafo, inicio, objetivo, heuristica_matriz):
     fila = [(heuristica_matriz[objetivo][inicio], 0, [inicio])]
     visitados = set()
+    iteracoes = []
 
     while fila:
         f, custo, caminho = heapq.heappop(fila)
         atual = caminho[-1]
+        iteracoes.append((caminho, custo))
 
         if atual == objetivo:
-            return caminho, [], custo
+            return caminho, iteracoes, custo
 
         if atual in visitados:
             continue

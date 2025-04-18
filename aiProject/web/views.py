@@ -34,20 +34,20 @@ def interface(request):
 
             if origem and destino:
                 if algoritmo == "custo_uniforme":
-                    caminho, _,custo = uniform_cost_search(GRAFO, origem, destino)
-                    resultado = {"caminho": caminho, "custo": custo}
+                    caminho, iteracoes,custo = uniform_cost_search(GRAFO, origem, destino)
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
 
                 elif algoritmo == "aprofundamento_progressivo":
-                    caminho, _, custo = aprofundamento_progressivo(GRAFO, origem, destino)
-                    resultado = {"caminho": caminho, "custo": custo}
+                    caminho, iteracoes, custo = aprofundamento_progressivo(GRAFO, origem, destino)
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
 
                 elif algoritmo == "procura_sofrega":
-                    caminho, _, custo = procura_sofrega(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
-                    resultado = {"caminho": caminho, "custo": custo}
+                    caminho, iteracoes, custo = procura_sofrega(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
 
                 elif algoritmo == "a_estrela":
-                    caminho, _, custo = a_estrela(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
-                    resultado = {"caminho": caminho, "custo": custo}
+                    caminho, iteracoes, custo = a_estrela(GRAFO, origem, destino, HEURISTICAS_MATRIZ)
+                    resultado = {"caminho": caminho, "custo": custo, "iteracoes": iteracoes}
 
                 if resultado and resultado.get("caminho"):
                     mapa_html = gerar_mapa(origem, destino, resultado["caminho"], GRAFO)
@@ -55,6 +55,7 @@ def interface(request):
     return render(request, "interface.html", {
         "resultado": resultado,
         "placa": placa,
+        "iteracoes": iteracoes,
         "cidades": cidades,
         "mapa_html": mapa_html
     })
